@@ -100,7 +100,7 @@ void deleteNode(Node **head, int value) {
     if (p->prev != NULL)
         p->prev->next = p->next;
     else
-        *head = p->next; // Update head if we’re deleting the first node
+        *head = p->next;
 
     if (p->next != NULL)
         p->next->prev = p->prev;
@@ -110,6 +110,12 @@ void deleteNode(Node **head, int value) {
 }
 
 void locateNode(Node *head, int value) {
+    if (isEmpty(head)) {
+        cout << "Cannot locate!" << endl;
+        cout << "Nothing to locate!" << endl;
+        cout << endl;
+        return;
+    }
     Node *p1;
 
     p1 = head;
@@ -128,7 +134,6 @@ void locateNode(Node *head, int value) {
         cout << "Value found: " << p1->value << endl;
         cout << "Location: " << ctr << endl;
     }
-
 }
 
 
