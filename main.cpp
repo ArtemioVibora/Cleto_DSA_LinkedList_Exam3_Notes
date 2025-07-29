@@ -180,6 +180,30 @@ void mainMenu(int num) {
 //Le Playground and testing area
 void hardCode() {
     cout << "Hello World!" << endl;
+
+    Node n1, n2, n3, n4, n5, n6, n7;
+    Node *leStart = NULL;
+    n1.value = 10;
+    n2.value = 20;
+    n3.value = 30;
+    n4.value = 40;
+    n5.value = 50;
+    n6.value = 60;
+    n7.value = 70;
+
+    leStart = &n1;
+    n1.next = &n2;
+    n2.next = &n3;
+    n3.next = &n4;
+    n4.next = &n5;
+    n5.next = &n6;
+    n6.next = &n7;
+    n7.next = NULL;
+
+    printList(leStart);
+
+    //Imma keep this one LMAO
+    Node *leEnd = NULL;
 }
 
 void runProgram() {
