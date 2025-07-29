@@ -136,7 +136,106 @@ void locateNode(Node *head, int value) {
     }
 }
 
+void printList(Node *head) {
+    if (isEmpty(head)) {
+        cout << "List is empty!" << endl;
+        return;
+    }
 
-int main() {
+    Node *p = head;
+
+    cout << endl;
+    cout << "Printing List:" << endl;
+    while (p != NULL) {
+
+
+        if (p->next == NULL) {
+            cout << p->value;
+        }
+        else {
+            cout << p->value << " => ";
+        }
+        p = p->next;
+    }
+    cout << endl;
+}
+
+//Run Program
+void mainMenu(int num) {
+    cout << "===============================================" << endl;
+    cout << "         Le Linked List Double Trouble         " << endl;
+    cout << "================================================" << endl;
+    cout << "Total number of nodes: " << num << endl;
+    cout << "<1> Insert From the Rear" << endl;
+    cout << "<2> Insert Within" << endl;
+    cout << "<3> Delete Node" << endl;
+    cout << "<4> Locate Node" << endl;
+    cout << "<5> Print List" << endl;
+    cout << "<6> Exit" << endl;
+    cout << "<7> LE PLAYGROUND HARD CODE SHIT" << endl;
+    cout << "------------------------------------------------" << endl;
+    cout << ">>>> ";
+}
+
+//Le Playground and testing area
+void hardCode() {
+    cout << "Hello World!" << endl;
+}
+
+void runProgram() {
+    Node *head = NULL;
+    int choice;
+    int data;
+    int pos;
+    int ctr;
+    bool flag = true;
+
+    while (flag) {
+        ctr = countNodes(head);
+        mainMenu(ctr);
+        cin >> choice;
+        switch (choice) {
+            case 1:
+                cout << "Insert Data: ";
+                cin >> data;
+                insertNode(&head, data);
+                break;
+            case 2:
+                cout << "Insert Data: ";
+                cin >> data;
+                cout << "Insert Position: ";
+                cin >> pos;
+                insertNodeWithin(&head, data, pos);
+                break;
+            case 3:
+                cout << "Delete Data: ";
+                cin >> data;
+                deleteNode(&head, data);
+                break;
+            case 4:
+                cout << "Locate Data: ";
+                cin >> data;
+                locateNode(head, data);
+                break;
+            case 5:
+                printList(head);
+                break;
+            case 6:
+                flag = false;
+                break;
+            case 7:
+                hardCode();
+                break;
+            default:
+                cout << "Error!" << endl;
+                break;
+        }
+
+    }
 
 }
+// main
+int main() {
+    runProgram();
+}
+
