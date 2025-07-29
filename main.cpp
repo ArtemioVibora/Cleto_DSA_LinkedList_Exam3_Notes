@@ -23,7 +23,6 @@ void insertNode(Node **head, int value) {
 
     if (*head == NULL) {
         *head = p1;
-        p1->prev = *head;
     }
     else {
         p2 = *head;
@@ -46,82 +45,89 @@ int countNodes(Node *head) {
 }
 
 void insertNodeWithin(Node **head, int value, int pos) {
-    Node *p1, *before, *here;
-    int ctr = 1;
-    here = *head;
-    before = NULL;
+    if (pos < 1 || countNodes(*head) + 1 < pos) {
+        cout << "Cannot insert!" << endl;
+        return;
+    }
+
+    Node *p1;
+    int ctr;
 
     p1 = (Node *)malloc(sizeof(Node));
     p1->value = value;
     p1->next = NULL;
     p1->prev = NULL;
 
-    if (countNodes(*head) + 1 < pos) {
-        cout << "Cannot insert!" << endl;
-        return;
-    }
-    else {
-        if (isEmpty(*head) && pos == 1) {
-            *head = p1;
-            p1->prev = *head;
-            return;
+
+    if (pos == 1) {
+        p1->next = *head;
+        if (*head != NULL)
+            (*head)->prev = p1;
+        *head = p1;
+    } else {
+        Node *p = *head;
+        ctr = 1;
+        while (ctr < pos - 1 && p != NULL) {
+            p = p->next;
+            ctr++;
         }
-        else if (*head != NULL && pos == 1) {
-            p1->next = *head;
-            *head = p1;
-            p1->prev = *head;
-        }
-        else {
-            while (here->next != NULL && ctr != pos) {
-                before = here;
-                here = here->next;
-                ++ctr;
-            }
-            before->next = p1;
-            p1->prev = before;
-            if (here->next != NULL) {
-                p1->next = here->next;
-                here->next->prev = p1;
-            }
-        }
+
+        p1->next = p->next;
+        p1->prev = p;
+
+        if (p->next != NULL)
+            p->next->prev = p1;
+        p->next = p1;
     }
 }
 
 void deleteNode(Node **head, int value) {
-    Node *before, *discard;
-    discard = *head;
-    before = NULL;
-
     if (isEmpty(*head)) {
         cout << "Cannot delete!" << endl;
         return;
     }
-    else {
-        if (value == discard->value) {
-            if (discard->next != NULL)
-                discard->next->prev = NULL;
-            free(discard);
-            cout << "Success!" << endl;
-        }
-        while (discard != NULL) {
-            before = discard;
-            discard = discard->next;
-        }
-        if (discard == NULL) {
-            cout << "Cannot delete!" << endl;
-            return;
-        }
-        else {
-            before->next = discard->next;
-            discard->next->prev = before;
-            free(discard);
-            cout << "Success!" << endl;
-        }
+
+    Node *p = *head;
+
+    while (p != NULL && p->value != value)
+        p = p->next;
+
+    if (p == NULL) {
+        cout << "Cannot delete!" << endl;
+        return;
     }
+
+    if (p->prev != NULL)
+        p->prev->next = p->next;
+    else
+        *head = p->next; // Update head if we’re deleting the first node
+
+    if (p->next != NULL)
+        p->next->prev = p->prev;
+
+    free(p);
+    cout << "Success!" << endl;
 }
 
 void locateNode(Node *head, int value) {
     Node *p1;
+
+    p1 = head;
+    int ctr = 0;
+
+    while (p1 != NULL && p1->value != value) {
+        p1 = p1->next;
+        ctr++;
+    }
+    if (p1 == NULL) {
+        cout << "Item not found!" << endl;
+        return;
+    }
+    else {
+        cout << "Item found!" << endl;
+        cout << "Value found: " << p1->value << endl;
+        cout << "Location: " << ctr << endl;
+    }
 
 }
 
